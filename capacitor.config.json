@@ -1,0 +1,5 @@
+\n{\n \"appId\":
+\"com.kenzen.perchance\",\n \"appName\": \"KENZEN Cockpit\",\n \"webDir\":
+\"www\",\n \"bundledWebRuntime\": false,\n \"android\": {\n \"backgroundColor\":
+\"#0b0e0c\",\n \"allowMixedContent\": true,\n \"captureInput\": true,\n
+\"webContentsDebuggingEnabled\": true\n }\n}\n
