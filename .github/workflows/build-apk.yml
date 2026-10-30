@@ -1,0 +1,65 @@
+name: Build Android APK
+
+on: push: branches: - main - master tags: - 'v*' workflow_dispatch:
+
+jobs: build: name: Generate & Compile Android APK runs-on: ubuntu-latest
+
+steps:
+  - name: Checkout Repository
+    uses: actions/checkout@v4
+
+  - name: Setup Node.js 20
+    uses: actions/setup-node@v4
+    with:
+      node-version: 20
+      cache: 'npm'
+
+  - name: Setup Java JDK 17 (Temurin)
+    uses: actions/setup-java@v4
+    with:
+      distribution: 'temurin'
+      java-version: 17
+
+  - name: Setup Android SDK
+    uses: android-actions/setup-android@v3
+
+  - name: Install Dependencies
+    run: npm install
+
+  - name: Generate App Launcher Icons
+    run: |
+      mkdir -p www
+      npm run prepare-assets
+
+  - name: Initialize and Sync Android Platform
+    run: |
+      npx cap add android
+      npx cap sync android
+
+  - name: Build Android Debug APK
+    run: |
+      cd android
+      chmod +x gradlew
+      ./gradlew assembleDebug --no-daemon --stacktrace
+
+  - name: Prepare Artifact
+    run: |
+      mv android/app/build/outputs/apk/debug/app-debug.apk android/app/build/outputs/apk/debug/kenzen-cockpit-perchance.apk
+
+  - name: Upload APK Artifact
+    uses: actions/upload-artifact@v4
+    with:
+      name: kenzen-cockpit-android-apk
+      path: android/app/build/outputs/apk/debug/kenzen-cockpit-perchance.apk
+      retention-days: 30
+
+  - name: Publish GitHub Release on Tag
+    if: startsWith(github.ref, 'refs/tags/')
+    uses: softprops/action-gh-release@v2
+    with:
+      files: android/app/build/outputs/apk/debug/kenzen-cockpit-perchance.apk
+      name: Release ${{ github.ref_name }}
+      draft: false
+      prerelease: false
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,9 +1,8 @@
-\n{\n "name":
-"kenzen-perchance-android",\n "version": "1.0.0",\n "description": "KENZEN
-Cockpit mobile prompt assistant for Perchance.org",\n "scripts": {\n
-"prepare-assets": "convert -size 512x512 xc:#0b0e0c -fill \"#67d898\" -gravity
-center -pointsize 160 -font DejaVu-Sans-Bold -annotate 0 \"KZ\" www/icon-512.png
-&& convert www/icon-512.png -resize 192x192 www/icon-192.png",\n "cap:sync":
-"npx cap sync android"\n },\n "dependencies": {\n "@capacitor/android":
-"^6.0.0",\n "@capacitor/cli": "^6.0.0",\n "@capacitor/core": "^6.0.0"\n
-}\n}\n
+{ "name": "kenzen-perchance-android",
+"version": "1.0.0", "description": "KENZEN Cockpit mobile prompt engineering
+matrix for Perchance AI generators", "scripts": { "prepare-assets": "convert
+-size 512x512 xc:#0b0e0c -fill "#67d898" -gravity center -pointsize 160 -font
+DejaVu-Sans-Bold -annotate 0 "KZ" www/icon-512.png && convert www/icon-512.png
+-resize 192x192 www/icon-192.png", "cap:sync": "npx cap sync android" },
+"dependencies": { "@capacitor/android": "^6.0.0", "@capacitor/cli": "^6.0.0",
+"@capacitor/core": "^6.0.0" } }
